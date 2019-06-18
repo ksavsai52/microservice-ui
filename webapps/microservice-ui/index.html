@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Multiplication V1</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="multiplication-client.js"></script>
+</head>
+<body>
+<div>
+	<h1>Welcome to Social Multiplication</h1>
+	<h2>This is your challenge for today:</h2>
+	<h1>
+		<span class="multiplication-a"></span> x <span class="multiplication-b"></span> =
+	</h1>
+	<p>
+		<form id="attempt-form">
+			Result? <input type="text" name="result-attempt"><br>
+			Your alias: <input type="text" name="user-alias"><br>
+			<input type="submit" value="Check">
+		</form>
+	</p>
+	<h2><span class="result-message"></span></h2>
+	<h2>Stats</h2>
+	<table id="stats" style="width: 100%;">
+		<thead>
+			<tr>
+				<th>Attempt ID</th>
+				<th>Multiplication</th>
+				<th>You Entered</th>
+				<th>Correct?</th>
+			</tr>
+		</thead>
+		<tbody id="stats-body"></tbody>
+	</table>
+</div>
+</body>
+</html>
