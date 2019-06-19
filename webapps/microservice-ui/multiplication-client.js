@@ -1,18 +1,25 @@
-function updateStats(userAlias) {
+function updateResults(userAlias) {
+	var userId = -1;
 	$.ajax({
-		url: "http://localhost:8080/results?alias=" + userAlias
-	}).then(function(data) {
-		$("#stats-body").empty();
-		data.forEach(function(row) {
-			$("#stats-body").append(
-					"<tr>" +
-					"<td>" + row.id + "</td>" +
-					"<td>" + row.multiplication.factorA + " x " + row.multiplication.factorB + "</td>" + 
-					"<td>" + row.resultAttempt + "</td>" + 
-					"<td>" + (row.correct ? "YES" : "NO") + "</td>" +
-					"</tr>");
-		});
+		async: false,
+		url: "http://localhost:8080/results?alias=" + userAlias,
+		success: function(data) {
+			$('#results-div').show();
+			$('#results-body').empty();
+			data.forEach(function(row) {
+				$('#results-body').append(
+					'<tr>' +
+						'<td>' + row.id + '</td>' +
+						'<td>' + row.multiplication.factorA + ' x ' + row.multiplication.factorB + '</td>' +
+						'<td>' + row.resultAttempt + '</td>' +
+						'<td>' + (row.correct ? 'YES' : 'NO') + '</td>' +
+					'</tr>'
+				);
+			});
+			userId = data[0].user.id;
+		}
 	});
+	return userId;
 }
 
 function updateMultiplication() {
@@ -57,7 +64,7 @@ $(document).ready(function() {
 		
 		// send data using post
 		$.ajax({
-			url: "/results",
+			url: "http://localhost:8080/results",
 			type: "POST",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=utf-8",
@@ -72,6 +79,12 @@ $(document).ready(function() {
 			}
 		});
 		
-		updateStats(userAlias);
+		updateMultiplication();
+		
+		setTimeout(function() {
+			var userId = updateResults(userAlias);
+			updateStats(userId);
+			updateLeaderBoard();
+		}, 300);
 	});
 });
